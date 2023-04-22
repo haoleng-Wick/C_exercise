@@ -3,16 +3,15 @@
  * 给一个二叉树的根,整数和深度,在该深度添加值为val的节点行
  * 
  * 先序遍历
- * input: root = [4, 2, 9, null, null, 9, null, null, 6, null,
- * null], val = 1, depth = 2
- * 		4 					4
- *	   / \				   / \
- *	  2   6 			  1   1
- *	 / 	   \			 /      \
- *	9   	9 			2        6
- *					   / \
- *					  9   9
- * output = [4, 1, 2, 9, null, null, 9, null, null, 6, null, null]
+ * input: root = [4, 2, 6, 3, 1, 5], val = 1, depth = 2
+ * 		 4 					    4
+ *	   /   \				   / \
+ *	  2     6 			      1   1
+ *	 / \   /	    	     /     \
+ *	3   1 5 	    	   	2       6
+ *					       / \     /
+ *					      3   1   5
+ * output = [4, 1, 1, 2, null, null, 6, 3, 1, 5]
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,7 +37,7 @@ int create_node(struct TreeNode **node)
 		*node = NULL;	//将原本的node值设为NULL;
 		return -1;
 	} else {
-		*node = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+		*node = (struct TreeNode*)malloc(sizeof(struct TreeNode));
 		if (node == NULL) {
 			printf("failed\n");
 			return -1;
@@ -53,6 +52,7 @@ int create_node(struct TreeNode **node)
 	return 0;
 }
 
+// 遍历节点
 void pre_traver_tree(struct TreeNode *node)
 {
 	if (node == NULL) {
