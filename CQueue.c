@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 
 	size = c_queue_size(Q);
 	printf("Queue's size = %d\n", size);
-	printf("出队顺序: [ ");
+	printf("The output oreder is: [ ");
 	for (int i = 0; i < size; ++i)
 	{
 		printf("%d ", c_queue_del(Q));
