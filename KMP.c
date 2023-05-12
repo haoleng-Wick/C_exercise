@@ -9,58 +9,54 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 int KMP(char *haystack, char *needle)
 {
-    int len_h = strlen(haystack);
-    int len_n = strlen(needle);
-    if(len_n == 0)
+    if(strlen(needle) == 0)
         return 0;
-
-// next数组(前缀表,即不统一减一的实现)
-    int next[len_h];
-    next[0] = 0;    // next数组首项为0
-    int j = 0, i = 1;   // 分别遍历字符串和next数组
-    while(i < len_h)
+    // next[]
+    int *next = (int *)malloc(strlen(needle) * sizeof(int));
+    int j = -1;
+    next[0] = j;
+    printf("next[] = [ %d ",next[0]);
+    for(int i = 1; i < strlen(needle); i++) // 从下标为一开始遍历
     {
-        // 如果不匹配则j退回到上一个字符的next值对应下标的位置
-        while(haystack[j] != haystack[i] && j > 0)
-        {
-            j = next[j-1];
-        }
-        // 匹配的话就继续遍历
-        if(haystack[j] == haystack[i])
+        while(j >= 0 && needle[i] != needle[j+1])	// 前后缀不相同
+            j = next[j];	// 向前回溯
+        if(needle[i] == needle[j+1])	// 前后缀相同
             j++;
-        next[i] = j;
-        i++;
+        next[i] = j;	// 将j(前缀的长度)赋值给next[i]
+        printf("%d ",next[i]);
     }
-
-    printf("非减一版本的NEXT[] == [ ");
-    for(int k = 0; k < len_h; k++)
-        printf("%d ", next[k]);
     printf("]\n");
-    // 根据next数组开始遍历源字符串
-    i = 0; j = 0;
-    while(i < len_h)
+
+    // KMP
+    j = -1;
+    for(int i = 0; i < strlen(haystack); i++)
     {
-        // 匹配失败则回溯指针
-        while(j > 0 && haystack[i] != needle[j])
-            j = next[j-1];
-        // 匹配成功则继续遍历
-        if(haystack[i] == needle[j])
+        while(j >= 0 && haystack[i] != needle[j+1]) // 回溯
+            j = next[j];
+        if(haystack[i] == needle[j+1])  // 向前遍历
             j++;
-        // 找到目标字符串,返回下标
-        if(j == len_n)
-            return (i - len_n + 1);
-        i++;
+        if(j == strlen(needle) - 1) // 判断是否匹配完成
+        {
+            free(next);
+            next = NULL;
+            return(i - strlen(needle) + 1); // 返回haystack的下标
+        }
     }
-    // 没有找到返回-1
+    free(next);
+    next = NULL;
     return -1;
 }
 
 int main(int argc, char **argv)
 {
+    if(argc != 3)
+        fprintf(stderr, "Usage: ./a.out abcabcbb cab\n");
+
     int k = KMP(argv[1], argv[2]);
-    printf("匹配的下标为:%d \n", k);
+    printf("The index is: %d \n", k);
     return 0;
 }
