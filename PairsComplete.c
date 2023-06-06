@@ -64,7 +64,7 @@ int main(int argc, char **argv)
     char s[10000];
     stack_top = 0;
     printf("please input the string:\n ");
-    scanf("%s", &s);
+    scanf("%s", s);
 
     printf("your input array is: '%s'\n", s);
     for(int i =0; i < strlen(s); i++)
