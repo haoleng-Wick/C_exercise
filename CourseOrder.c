@@ -38,7 +38,6 @@ void find_order(int num_courses, int (*prerequisites)[2], int prerequisites_size
     }
     if(rear < num_courses)  // 如果最后输出的课程数目小于总课程数目，说明有冲突
         printf("Error, there are course conflicts ");
-        return;
 }
 
 int main(int argc, char **argv)

@@ -13,7 +13,9 @@
 
 int cmp(const void *a, const void *b)
 {
-	return *(int *)a - *(int *)b;
+	return *(int *)a - *(int *)b;   // 这是从小到达的排序
+    // 从大到小如下所示：
+    // return *(int *)b - *(int *)a;
 }
 
 int main(int argc, char **argv)
@@ -33,7 +35,7 @@ int main(int argc, char **argv)
 		sum += nums[i];
 	}
 
-/* C语言自带的排序函数 
+/* C语言自带的快速排序函数 
  * 与上面的cmp配合使用 */
 	qsort(nums, numsSize, sizeof(int), cmp);
 	printf("qsort nums = [ ");
