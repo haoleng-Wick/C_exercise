@@ -5,6 +5,7 @@
  * output: [0,1,2,3]
  *
  * 用到拓扑
+ *
  */
 #include <stdio.h>
 #include <stdlib.h>
